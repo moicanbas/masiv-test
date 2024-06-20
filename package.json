@@ -10,8 +10,11 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.0-rc.2",
     "axios": "^1.7.2",
     "pinia": "^2.1.7",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.0.0-rc.2",
     "vue": "^3.4.29",
     "vue3-toastify": "^0.2.1"
   },
@@ -21,6 +24,7 @@
     "autoprefixer": "^10.4.19",
     "jsdom": "^24.1.0",
     "postcss": "^8.4.38",
+    "sass": "^1.77.6",
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1",
     "vitest": "^1.6.0"
