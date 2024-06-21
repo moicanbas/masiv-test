@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useComicStore } from '@/stores/store'
+import { searchNewComic } from '@/services/callToApi';
+import NotFound from '@/components/NotFound.vue';
 
 const comicStore = useComicStore()
 
 onMounted(() => {
-    comicStore.searchComic()
+    searchNewComic()
 })
 </script>
 
@@ -23,7 +25,8 @@ onMounted(() => {
         </div>
     </template>
     <div class="p-6 w-full h-full mt-3" v-if="!comicStore.comic">
-        <ProgressSpinner />
+        <NotFound v-if="comicStore.viewNotFound" />
+        <ProgressSpinner v-if="!comicStore.viewNotFound" />
     </div>
 </template>
 
