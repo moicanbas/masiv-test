@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useComicStore } from '@/stores/store'
+import { searchComic } from '@/services/callToApi';
 
 const comicStore = useComicStore()
 
 onMounted(() => {
-    comicStore.searchComic()
+    searchComic()
 })
 </script>
 

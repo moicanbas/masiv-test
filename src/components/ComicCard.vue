@@ -1,8 +1,7 @@
 <template>
     <div class="rounded overflow-hidden bg-surface-100">
         <div class="grid justify-center align-center">
-            {{ comicStore.viewConfetti }}
-            <ConfettiExplosion v-show="comicStore.viewConfetti"/>
+            <ConfettiExplosion v-if="comicStore.viewConfetti"/>
             <ComicContent />
             <ComicRating />
             <ButtonsArea />

@@ -6,6 +6,7 @@ const showToastMessage = (type, message) => {
     position: toast.POSITION.BOTTOM_RIGHT,
     theme: "colored",
     autoClose: 3500,
+    limit: 3,
   });
 };
 
@@ -25,30 +26,35 @@ const getComicStore = () => {
     qualifiedComics: comicStore.qualifiedComics,
     numberRandom: comicStore.numberRandom,
     rating: comicStore.rating,
+    comicStore,
   };
 };
 
 export const rateComics = (comic) => {
-  const comicStore= getComicStore();
+  const comicStore = getComicStore();
   comicStore.qualifiedComics.push({ id: comic.id, rating: comic.rating });
   storeQualifiedComics(comicStore.qualifiedComics);
 };
 
 export const ratingComic = () => {
-  const comicStore = getComicStore();
-  if (comicStore.qualifiedComics.findIndex((item) => item.id === comicStore.numberRandom) === -1) {
+  const comicStore = useComicStore();
+  if (
+    comicStore.qualifiedComics.findIndex(
+      (item) => item.id === comicStore.numberRandom
+    ) === -1
+  ) {
     rateComics({ id: comicStore.numberRandom, rating: comicStore.rating });
   }
-  comicStore.changeConfetti()
-  toastSuccessMessage('Rating send')
+  toastSuccessMessage("Rating send");
+  comicStore.changeConfetti();
 };
 
 export const validateRating = () => {
-  const { qualifiedComics, numberRandom } = getComicStore();
-  const comicRating = qualifiedComics.find((item) => item.id === numberRandom);
+  const comicStore = useComicStore();
+  const comicRating = comicStore.qualifiedComics.find(
+    (item) => item.id === comicStore.numberRandom
+  );
   if (comicRating) {
-    const comicStore = useComicStore();
-    comicStore.changeConfetti()
     comicStore.rating = comicRating.rating;
   }
 };
