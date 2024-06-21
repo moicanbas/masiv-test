@@ -7,12 +7,13 @@ import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
 import Skeleton from "primevue/skeleton";
 import ProgressSpinner from "primevue/progressspinner";
-import Image from 'primevue/image';
-import Rating from 'primevue/rating';
-import Button from 'primevue/button';
+import Image from "primevue/image";
+import Rating from "primevue/rating";
+import Button from "primevue/button";
+import ConfettiExplosion from "vue-confetti-explosion";
 
 import "vue3-toastify/dist/index.css";
-import '@/assets/styles.scss';
+import "@/assets/styles.scss";
 import "@/index.css";
 
 const app = createApp(App);
@@ -30,5 +31,6 @@ app.component("ProgressSpinner", ProgressSpinner);
 app.component("Image", Image);
 app.component("Rating", Rating);
 app.component("Button", Button);
+app.component("ConfettiExplosion", ConfettiExplosion)
 
 app.mount("#app");

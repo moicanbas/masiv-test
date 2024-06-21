@@ -1,14 +1,15 @@
 <template>
     <div class="m-1">
-        <Button :label="comicStore.generate ? 'Generando' : 'Generar nuevo comic'" icon="pi pi-refresh"
-            :loading="comicStore.generate" outlined @click="comicStore.searchComic"/>
+        <Button :label="generate ? 'Generando' : 'Generar nuevo comic'" icon="pi pi-refresh"
+            :loading="generate" outlined @click="searchNewComic"/>
     </div>
 </template>
 
 <script setup>
 import { useComicStore } from '@/stores/store'
+import { searchNewComic } from '@/services/callToApi';
 
-const comicStore = useComicStore()
+const { generate } = useComicStore()
 </script>
 
 <style lang="scss" scoped></style>
