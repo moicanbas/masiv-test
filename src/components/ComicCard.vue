@@ -1,6 +1,8 @@
 <template>
     <div class="rounded overflow-hidden bg-surface-100">
         <div class="grid justify-center align-center">
+            {{ comicStore.viewConfetti }}
+            <ConfettiExplosion v-show="comicStore.viewConfetti"/>
             <ComicContent />
             <ComicRating />
             <ButtonsArea />
@@ -13,6 +15,9 @@ import ComicContent from '@/components/ComicContent.vue';
 import ComicRating from '@/components/ComicRating.vue';
 import ButtonsArea from '@/components/ButtonsArea.vue';
 
+import { useComicStore } from '@/stores/store';
+
+const comicStore = useComicStore()
 </script>
 
 <style lang="scss" scoped></style>
