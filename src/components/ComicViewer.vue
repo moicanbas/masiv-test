@@ -1,7 +1,7 @@
 <template>
     <div class="rounded overflow-hidden">
         <div class="grid justify-center align-center">
-            <ConfettiExplosion v-if="comicStore.viewConfetti"/>
+            <ConfettiExplosion v-if="viewConfetti" />
             <ComicContent />
             <ComicRating />
             <ButtonsArea />
@@ -16,7 +16,7 @@ import ButtonsArea from '@/components/ButtonsArea.vue';
 
 import { useComicStore } from '@/stores/store';
 
-const comicStore = useComicStore()
+const { viewConfetti } = useComicStore()
 </script>
 
 <style lang="scss" scoped></style>

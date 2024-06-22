@@ -20,6 +20,8 @@
     "vue3-toastify": "^0.2.1"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.1.0",
+    "@testing-library/vue": "^8.1.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "@vue/test-utils": "^2.4.6",
     "autoprefixer": "^10.4.19",

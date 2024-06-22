@@ -1,60 +1,51 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import { setActivePinia, createPinia } from 'pinia';
-import { searchNewComic } from '../callToApi';
-import { useComicStore } from '@/stores/store';
-import { generateRandomNumber, validateComicRating, showErrorToast } from '@/composables/utils';
+import { describe, it, beforeEach } from "vitest";
+import { setActivePinia, createPinia } from "pinia";
+import axios from "axios";
+import { searchNewComic } from "@/services/callToApi";
+import { validateComicRating, showErrorToast } from "@/composables/utils";
+import { useComicStore } from "@/stores/store";
 
-jest.mock('@/composables/utils', () => ({
-  generateRandomNumber: jest.fn(),
-  validateComicRating: jest.fn(),
-  showErrorToast: jest.fn()
-}));
-
-describe('callToApi.js', () => {
-  let mock;
+describe("searchNewComic", () => {
+  let comicStore;
 
   beforeEach(() => {
     setActivePinia(createPinia());
-    mock = new MockAdapter(axios);
-    jest.clearAllMocks();  // Clear mock calls
+    comicStore = useComicStore();
+    vitest.mockModule(axios, {
+      get: jest.fn(),
+    });
   });
 
-  afterEach(() => {
-    mock.restore();
-  });
-
-  it('fetches and updates the comic store correctly', async () => {
-    const comicStore = useComicStore();
-    const mockData = { title: 'Mock Comic' };
-    const randomNum = 1;
-
-    generateRandomNumber.mockReturnValue(randomNum);
-    mock.onGet(`${comicStore.urlSearch}/${randomNum}/info.0.json`).reply(200, mockData);
+  it("should set comicStore properties correctly on successful API call", async () => {
+    const mockComicData = {
+      /* Datos simulados de respuesta */
+    };
+    axios.get.mockResolvedValue({ data: mockComicData });
 
     await searchNewComic();
 
-    expect(generateRandomNumber).toHaveBeenCalled();
-    expect(validateComicRating).toHaveBeenCalled();
-    expect(comicStore.comic).toEqual(mockData);
+    expect(comicStore.comic).toEqual(mockComicData);
+    expect(comicStore.generate).toBe(false);
     expect(comicStore.viewNotFound).toBe(false);
-    expect(comicStore.generate).toBe(false);
+    expect(comicStore.numberRandom).toBeDefined();
+    expect(axios.get).toHaveBeenCalledWith(
+      `${comicStore.urlSearch}/${comicStore.numberRandom}/info.0.json`
+    );
+    expect(validateComicRating).toHaveBeenCalled();
+    expect(showErrorToast).not.toHaveBeenCalled();
   });
 
-  it('handles API errors correctly', async () => {
-    const comicStore = useComicStore();
-    const randomNum = 1;
-
-    generateRandomNumber.mockReturnValue(randomNum);
-    mock.onGet(`${comicStore.urlSearch}/${randomNum}/info.0.json`).reply(500);
+  it("should handle error and show error toast on API failure", async () => {
+    const errorMessage = "Error message";
+    axios.get.mockRejectedValue(new Error(errorMessage));
 
     await searchNewComic();
 
-    expect(generateRandomNumber).toHaveBeenCalled();
-    expect(validateComicRating).toHaveBeenCalled();
     expect(comicStore.comic).toBeNull();
-    expect(comicStore.viewNotFound).toBe(true);
     expect(comicStore.generate).toBe(false);
-    expect(showErrorToast).toHaveBeenCalledWith("An error occurred while processing the request.");
+    expect(comicStore.viewNotFound).toBe(true);
+    expect(showErrorToast).toHaveBeenCalledWith(
+      "An error occurred while processing the request."
+    );
   });
 });
