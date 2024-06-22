@@ -11,8 +11,7 @@ export const useComicStore = defineStore("comic", {
     viewConfetti: false,
     qualifiedComics: localStorage.getItem("qualifiedComics")
       ? JSON.parse(localStorage.getItem("qualifiedComics"))
-      : [],
+      : []
   }),
-  actions: {
-  },
+  actions: {}
 });

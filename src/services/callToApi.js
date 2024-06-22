@@ -1,5 +1,9 @@
 import axios from "axios";
-import { generateRandomNumber, validateComicRating, showErrorToast } from "@/composables/utils";
+import {
+  generateRandomNumber,
+  validateComicRating,
+  showErrorToast
+} from "@/composables/utils";
 import { useComicStore } from "@/stores/store";
 
 export const searchNewComic = async () => {
@@ -8,7 +12,7 @@ export const searchNewComic = async () => {
   comicStore.rating = null;
   comicStore.generate = true;
   try {
-    comicStore.viewNotFound = false
+    comicStore.viewNotFound = false;
     comicStore.numberRandom = generateRandomNumber();
     validateComicRating();
     const response = await axios.get(
@@ -16,7 +20,7 @@ export const searchNewComic = async () => {
     );
     comicStore.comic = response.data;
   } catch (error) {
-    comicStore.viewNotFound = true
+    comicStore.viewNotFound = true;
     showErrorToast("An error occurred while processing the request.");
   } finally {
     comicStore.generate = false;

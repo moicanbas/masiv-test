@@ -12,7 +12,7 @@ describe("searchNewComic", () => {
     setActivePinia(createPinia());
     comicStore = useComicStore();
     vitest.mockModule(axios, {
-      get: jest.fn(),
+      get: jest.fn()
     });
   });
 

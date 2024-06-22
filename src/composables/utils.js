@@ -6,18 +6,17 @@ const displayToastMessage = (type, message) => {
     position: toast.POSITION.BOTTOM_RIGHT,
     theme: "colored",
     autoClose: 3500,
-    limit: 3,
+    limit: 3
   });
 };
 
-export const showSuccessToast = (message) =>
+export const showSuccessToast = message =>
   displayToastMessage("success", message);
-export const showErrorToast = (message) =>
-  displayToastMessage("error", message);
+export const showErrorToast = message => displayToastMessage("error", message);
 
 export const generateRandomNumber = () => Math.floor(Math.random() * 25) + 1;
 
-const saveQualifiedComics = (comics) => {
+const saveQualifiedComics = comics => {
   localStorage.setItem("qualifiedComics", JSON.stringify(comics));
 };
 
@@ -39,7 +38,7 @@ const getComicStore = () => {
   };
 };
 
-export const rateComic = (comic) => {
+export const rateComic = comic => {
   const { qualifiedComics } = getComicStore();
   qualifiedComics.push({ id: comic.id, rating: comic.rating });
   saveQualifiedComics(qualifiedComics);
@@ -49,12 +48,12 @@ export const rateCurrentComic = () => {
   const comicStore = useComicStore();
   if (
     comicStore.qualifiedComics.findIndex(
-      (item) => item.id === comicStore.numberRandom
+      item => item.id === comicStore.numberRandom
     ) === -1
   ) {
     rateComic({
       id: comicStore.numberRandom,
-      rating: comicStore.rating,
+      rating: comicStore.rating
     });
   }
   showSuccessToast("Rating sent");
@@ -64,7 +63,7 @@ export const rateCurrentComic = () => {
 export const validateComicRating = () => {
   const conmicStore = useComicStore();
   const existingComicRating = conmicStore.qualifiedComics.find(
-    (item) => item.id === conmicStore.numberRandom
+    item => item.id === conmicStore.numberRandom
   );
   if (existingComicRating) {
     conmicStore.rating = existingComicRating.rating;

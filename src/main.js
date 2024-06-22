@@ -23,8 +23,8 @@ app.use(createPinia());
 app.use(Vue3Toasity);
 app.use(PrimeVue, {
   theme: {
-    preset: Aura,
-  },
+    preset: Aura
+  }
 });
 
 app.component("Skeleton", Skeleton);
