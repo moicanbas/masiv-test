@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded overflow-hidden bg-surface-100">
+    <div class="rounded overflow-hidden">
         <div class="grid justify-center align-center">
             <ConfettiExplosion v-if="comicStore.viewConfetti"/>
             <ComicContent />

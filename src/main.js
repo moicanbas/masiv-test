@@ -11,6 +11,7 @@ import Image from "primevue/image";
 import Rating from "primevue/rating";
 import Button from "primevue/button";
 import ConfettiExplosion from "vue-confetti-explosion";
+import Tooltip from "primevue/tooltip";
 
 import "vue3-toastify/dist/index.css";
 import "@/assets/styles.scss";
@@ -31,6 +32,8 @@ app.component("ProgressSpinner", ProgressSpinner);
 app.component("Image", Image);
 app.component("Rating", Rating);
 app.component("Button", Button);
-app.component("ConfettiExplosion", ConfettiExplosion)
+app.component("ConfettiExplosion", ConfettiExplosion);
+
+app.directive("tooltip", Tooltip);
 
 app.mount("#app");

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useComicStore } from '@/stores/store'
 import { searchNewComic } from '@/services/callToApi';
 import NotFound from '@/components/NotFound.vue';
@@ -13,9 +13,13 @@ onMounted(() => {
 
 <template>
     <template v-if="comicStore.comic">
-        <div class="resize-image mt-3">
+        <div class="text-center text-sm opacity-60">
+            Click on image to expand
+        </div>
+        <div class="resize-image mt-3 mb-0">
             <div class="w-full h-full">
-                <Image :src="comicStore.comic.img" :alt="comicStore.comic.alt" class="custom-image" preview />
+                <Image :src="comicStore.comic.img ? comicStore.comic.img : '/src/assets/default_image.jpg'"
+                    :alt="comicStore.comic.alt || 'Default image'" class="custom-image" preview />
             </div>
         </div>
         <div class="title m-3 mt-0">

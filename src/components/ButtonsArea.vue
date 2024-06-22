@@ -1,6 +1,6 @@
 <template>
     <div class="m-1">
-        <Button :label="generate ? 'Generando' : 'Generar nuevo comic'" icon="pi pi-refresh"
+        <Button :label="generate ? 'Generating' : 'Generate random comic'" icon="pi pi-refresh"
             :loading="generate" outlined @click="searchNewComic"/>
     </div>
 </template>

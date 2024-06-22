@@ -5,10 +5,10 @@
 <template>
     <div class="text-center">
         <article class="text-balance">
-            <div class="text-3xl font-bold">Recurso no encontrado</div>
+            <div class="text-3xl font-bold">Resource not found</div>
             <p class="w-[45vw] text-md opacity-60">
-                Lamentablemente, no hemos podido encontrar el recurso que estás buscando. Puede que haya sido movido,
-                eliminado o que nunca haya existido.
+                Unfortunately, we have not been able to find the resource you are looking for. It may have been moved,
+                deleted or never existed.
             </p>
         </article>
     </div>

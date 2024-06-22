@@ -15,7 +15,7 @@ export const showSuccessToast = (message) =>
 export const showErrorToast = (message) =>
   displayToastMessage("error", message);
 
-export const generateRandomNumber = () => Math.floor(Math.random() * 5) + 1;
+export const generateRandomNumber = () => Math.floor(Math.random() * 25) + 1;
 
 const saveQualifiedComics = (comics) => {
   localStorage.setItem("qualifiedComics", JSON.stringify(comics));
@@ -23,7 +23,7 @@ const saveQualifiedComics = (comics) => {
 
 const changeConfetti = () => {
   const comicStore = useComicStore();
-  if (comicStore.rating > 3) {
+  if (comicStore.rating >= 3) {
     setTimeout(() => {
       comicStore.viewConfetti = true;
     }, 200);
