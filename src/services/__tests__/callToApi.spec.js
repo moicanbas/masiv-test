@@ -17,9 +17,6 @@ describe("searchNewComic", () => {
   });
 
   it("should set comicStore properties correctly on successful API call", async () => {
-    const mockComicData = {
-      /* Datos simulados de respuesta */
-    };
     axios.get.mockResolvedValue({ data: mockComicData });
 
     await searchNewComic();
