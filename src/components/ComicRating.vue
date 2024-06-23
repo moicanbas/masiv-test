@@ -6,11 +6,8 @@ const comicStore = useComicStore();
 </script>
 <template>
   <div class="flex justify-center m-1 grid" v-if="comicStore.comic">
-    <Rating
-      v-model="comicStore.rating"
-      @change="rateCurrentComic"
-      v-tooltip="comicStore.comic ? 'Give a rating' : 'Change rating'"
-    >
+    <Rating v-model="comicStore.rating" @change="rateCurrentComic"
+      v-tooltip="comicStore.rating ? 'Change rating' : 'Give a rating'">
       <template #onicon>
         <img src="/src/assets/custom-onicon.png" height="24" width="24" />
       </template>
