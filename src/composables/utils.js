@@ -14,7 +14,7 @@ export const showSuccessToast = message =>
   displayToastMessage("success", message);
 export const showErrorToast = message => displayToastMessage("error", message);
 
-export const generateRandomNumber = () => Math.floor(Math.random() * 25) + 1;
+export const generateRandomNumber = () => Math.floor(Math.random() * 100) + 1; // 100 or more, you can try 1000 
 
 const saveQualifiedComics = comics => {
   localStorage.setItem("qualifiedComics", JSON.stringify(comics));
