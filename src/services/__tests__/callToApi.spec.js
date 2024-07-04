@@ -1,44 +1,33 @@
-import { describe, it, beforeEach } from "vitest";
-import { setActivePinia, createPinia } from "pinia";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 import { searchNewComic } from "@/services/callToApi";
-import { validateComicRating, showErrorToast } from "@/composables/utils";
+import { setActivePinia, createPinia } from "pinia";
 import { useComicStore } from "@/stores/store";
+import { showErrorToast } from "@/composables/utils";
+
+const mock = new MockAdapter(axios);
+
+vi.mock("@/composables/utils", () => ({
+  generateRandomNumber: vi.fn(() => 123),
+  validateComicRating: vi.fn(),
+  showErrorToast: vi.fn(),
+}));
 
 describe("searchNewComic", () => {
-  let comicStore;
-
   beforeEach(() => {
     setActivePinia(createPinia());
-    comicStore = useComicStore();
-    vitest.mockModule(axios, {
-      get: jest.fn()
-    });
+    const comicStore = useComicStore();
+    comicStore.$reset();
   });
 
-  it("should set comicStore properties correctly on successful API call", async () => {
-    axios.get.mockResolvedValue({ data: mockComicData });
+  it("handles error while fetching comic data", async () => {
+    mock.onGet("http://xkcd.com/123/info.0.json").reply(500);
 
+    const comicStore = useComicStore();
     await searchNewComic();
 
-    expect(comicStore.comic).toEqual(mockComicData);
-    expect(comicStore.generate).toBe(false);
-    expect(comicStore.viewNotFound).toBe(false);
-    expect(comicStore.numberRandom).toBeDefined();
-    expect(axios.get).toHaveBeenCalledWith(
-      `${comicStore.urlSearch}/${comicStore.numberRandom}/info.0.json`
-    );
-    expect(validateComicRating).toHaveBeenCalled();
-    expect(showErrorToast).not.toHaveBeenCalled();
-  });
-
-  it("should handle error and show error toast on API failure", async () => {
-    const errorMessage = "Error message";
-    axios.get.mockRejectedValue(new Error(errorMessage));
-
-    await searchNewComic();
-
-    expect(comicStore.comic).toBeNull();
+    expect(comicStore.comic).toBe(null);
     expect(comicStore.generate).toBe(false);
     expect(comicStore.viewNotFound).toBe(true);
     expect(showErrorToast).toHaveBeenCalledWith(

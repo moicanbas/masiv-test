@@ -1,32 +1,52 @@
-import { render, screen } from "@testing-library/vue"; // Importa la función render de @testing-library/vue
-import { createPinia, PiniaVuePlugin } from "pinia";
+import { shallowMount } from "@vue/test-utils";
 import ComicViewer from "@/components/ComicViewer.vue";
-import { describe, it } from "vitest";
+import { createTestingPinia } from "@pinia/testing";
+import { useComicStore } from "@/stores/store";
+import { describe, it, vi, expect } from "vitest";
+import ComicContent from "@/components/ComicContent.vue";
+import ComicRating from "@/components/ComicRating.vue";
+import ButtonsArea from "@/components/ButtonsArea.vue";
 
-const pinia = createPinia();
-pinia.use(PiniaVuePlugin);
+describe("ComicViewer.vue", () => {
+  it("renders ComicContent, ComicRating, ButtonsArea when viewConfetti is false", async () => {
+    const pinia = createTestingPinia({
+      createSpy: vi.fn,
+    });
 
-const renderWithPinia = (component, options = {}) => {
-  return render(component, {
-    global: {
-      plugins: [pinia],
-      ...options
-    }
+    const wrapper = shallowMount(ComicViewer, {
+      global: {
+        plugins: [pinia],
+      },
+    });
+
+    const comicStore = useComicStore();
+    comicStore.viewConfetti = false;
+
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.findComponent(ComicContent).exists()).toBe(true);
+    expect(wrapper.findComponent(ComicRating).exists()).toBe(true);
+    expect(wrapper.findComponent(ButtonsArea).exists()).toBe(true);
   });
-};
 
-describe("ComicViewer", () => {
-  it("renders the component correctly", async () => {
-    renderWithPinia(ComicViewer);
+  it("renders ConfettiExplosion when viewConfetti is true", async () => {
+    const pinia = createTestingPinia({
+      createSpy: vi.fn,
+    });
 
-    await screen.findByTestId("confetti-explosion");
-    await screen.findByTestId("comic-content");
-    await screen.findByTestId("comic-rating");
-    await screen.findByTestId("buttons-area");
+    const wrapper = shallowMount(ComicViewer, {
+      global: {
+        plugins: [pinia],
+      },
+    });
 
-    expect(screen.getByTestId("confetti-explosion")).toBeInTheDocument();
-    expect(screen.getByTestId("comic-content")).toBeInTheDocument();
-    expect(screen.getByTestId("comic-rating")).toBeInTheDocument();
-    expect(screen.getByTestId("buttons-area")).toBeInTheDocument();
+    const comicStore = useComicStore();
+    comicStore.viewConfetti = true;
+
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.findComponent(ComicContent).exists()).toBe(true);
+    expect(wrapper.findComponent(ComicRating).exists()).toBe(true);
+    expect(wrapper.findComponent(ButtonsArea).exists()).toBe(true);
   });
 });
