@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  VITE_API_URL = "/api"
+
+# Redirección (proxy) para API
+[[redirects]]
+  from = "/api/*"
+  to = "https://tubackend.com/api/:splat"
+  status = 200
+
+# Redirección para SPA (Vue Router)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
